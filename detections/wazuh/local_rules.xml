@@ -1,0 +1,80 @@
+<!-- Local rules -->
+
+<!-- Modify it at your will. -->
+<!-- Copyright (C) 2015, Wazuh Inc. -->
+
+<!-- Example -->
+
+<group name="local,custom_rules,">
+
+  <!-- ============================================================
+       RULE 1: New User Account Creation (Linux)
+       Layers on top of Wazuh's default useradd/adduser detection
+       (base rule 5901 fires on account changes via auth.log).
+       ============================================================ -->
+  <rule id="100001" level="10">
+    <if_sid>5902</if_sid>
+    <description>New user account created on the system</description>
+    <mitre>
+      <id>T1136</id>
+    </mitre>
+  </rule>
+
+  <!-- ============================================================
+       RULE 2: SSH Brute Force (frequency-based)
+       Base rule 5716 = "sshd: authentication failed".
+       Fires when the SAME source IP fails 6+ times within 120s.
+       frequency=6 means "on the 6th match", so this triggers on
+       the 6th failure (i.e. more than five failures).
+       ============================================================= -->
+  <rule id="100002" level="12" frequency="6" timeframe="120">
+    <if_matched_sid>5760</if_matched_sid>
+    <same_source_ip />
+    <description>SSH brute force attempt: 6+ authentication failures from the same source IP within 2 minutes</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>authentication_failures,</group>
+  </rule>
+
+  <!-- ============================================================
+       RULE 3: USB Device Insertion (Windows)
+       Windows logs Event ID 2003 (or 2010/2100 depending on driver)
+       under Microsoft-Windows-DriverFrameworks-UserMode when a
+       removable storage device is inserted.
+       ============================================================ -->
+  <rule id="100003" level="7">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^2003$</field>
+    <description>USB storage device inserted on Windows host</description>
+    <mitre>
+      <id>T1091</id>
+    </mitre>
+    <group>removable_storage,</group>
+  </rule>
+
+  <rule id="100100" level="5">
+    <if_sid>87700</if_sid>
+    <action>block</action>
+    <description>pfSense firewall drop event (local override, logged)</description>
+  </rule>
+  <rule id="100101" level="3">
+    <if_sid>87700</if_sid>
+    <action>pass</action>
+    <description>pfSense firewall pass event (local override, logged)</description>
+  </rule>
+  <rule id="100300" level="12">
+    <if_sid>20100</if_sid>
+    <description>Source IP matches known malicious IP (Abuse.ch feed)</description>
+  </rule>
+
+
+  <rule id="100210" level="10">
+    <if_sid>550</if_sid>
+    <field name="syscheck.path">C:\\Espionage\\.*\.b64$</field>
+    <description>Suspicious .b64 file created/modified in C:\Espionage - possible data exfiltration staging (obfuscated payload)</description>
+    <mitre>
+      <id>T1027</id>
+    </mitre>
+  </rule>
+</group>
