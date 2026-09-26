@@ -70,7 +70,7 @@ capstone investigations.
 | `05-Threat-Intelligence` | VirusTotal, URLhaus, MITRE ATT&CK mapping |
 | `06-Incident-Response` | NIST 800-61 IR reports, insider threat simulation |
 | `07-Digital-Forensics` | Browser/LNK/USB forensics, Volatility 3 capstone |
-| `docs/reports` | Full week-by-week internship reports |
+| `docs-archive` | Full week-by-week internship reports (raw archive) |
 
 ---
 
