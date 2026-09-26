@@ -54,7 +54,7 @@ capstone investigations.
 |---|---|---|
 | Kali Linux | Attacker / testing | 192.168.56.102 |
 | Ubuntu Server (Wazuh Manager) | SIEM, FIM, log analysis | 192.168.56.10 |
-| Windows 10 | Monitored endpoint (Wazuh agent) | agent |
+| Windows 11 | Monitored endpoint (Wazuh agent) | agent |
 | pfSense | Firewall / network segmentation | gateway |
 
 ---
@@ -74,13 +74,21 @@ capstone investigations.
 
 ---
 
-## 🔍 Notable Finding
+## 🔍 Notable Findings
 
-Wazuh 4.14.5's bundled `virustotal.py` integration script targets the deprecated
-VirusTotal **API v2** endpoint, which fails against valid v3 keys. I identified and
-patched it to use the **v3 endpoint** with correct header-based authentication —
-documented as a genuine visibility-gap finding.
-
+- **VirusTotal API v2 → v3 patch** — Wazuh 4.14.5's bundled `virustotal.py`
+  integration script targets the deprecated VirusTotal API v2 endpoint, which
+  fails against valid v3 keys. Identified and patched it to use the v3 endpoint
+  with correct header-based authentication — documented as a genuine
+  visibility-gap finding.
+- **Silent detection rule failure** — A custom Wazuh rule failed to fire with no
+  error, caused by referencing the wrong FIM event field (`file` instead of the
+  actual `syscheck.path`). Found by inspecting the raw alert JSON directly
+  rather than trusting a clean service restart log.
+- **pfSense boot failure on VirtualBox** — The pfSense VM refused to boot into
+  64-bit long mode because Hyper-V held exclusive access to VT-x. Resolved by
+  setting VirtualBox's paravirtualization interface to Hyper-V and correcting
+  the guest OS type to 64-bit FreeBSD.
 ---
 
 ## 🧠 Skills Demonstrated
