@@ -96,7 +96,22 @@ capstone investigations.
 `MITRE ATT&CK` `NIST SP 800-61` `Detection Engineering` `Network Segmentation`
 `SIEM/IDS Deployment` `Digital Forensics` `Volatility 3` `Threat Intelligence`
 
----
+### 🧩 Skills Breakdown
+
+- **Network Analysis** — Wireshark (ARP, DNS, HTTP, QUIC, ICMPv6), Suricata IDS
+  in af-packet mode with custom rules, validated via offline PCAP replay
+- **SIEM / Detection Engineering** — Wazuh agent deployment, File Integrity
+  Monitoring, custom MITRE-mapped detection rules, Active Response automation
+  (firewall-drop on SSH brute-force)
+- **Threat Intelligence** — VirusTotal API v3 enrichment, Abuse.ch/URLhaus feeds
+- **Malware Analysis** — Dynamic analysis via ANY.RUN sandbox, IOC/IOA extraction
+- **Incident Response** — NIST SP 800-61 IR plans, insider threat simulation
+  (staging, encoding, exfiltration, deletion), CyberChef decoding
+- **Digital Forensics** — Browser forensics (Chrome/Edge/Firefox/Brave), LNK
+  file analysis (LECmd), USB device forensics, memory forensics (Volatility 3),
+  disk image analysis (Autopsy, .E01)
+- **Network Security** — pfSense firewall configuration, GeoIP blocking
+  (ipset/iptables), network segmentation
 
 ## 🔗 Background
 
