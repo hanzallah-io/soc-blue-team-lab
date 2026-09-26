@@ -6,8 +6,11 @@
 
 <p align="center">
 <img src="https://img.shields.io/badge/STATUS-COMPLETED-brightgreen">
-<img src="https://img.shields.io/badge/SOC-LAB-blue">
-<img src="https://img.shields.io/badge/BLUE%20TEAM-INTERNSHIP-purple">
+<img src="https://img.shields.io/badge/DURATION-90%20DAYS-blue">
+<img src="https://img.shields.io/badge/WEEKS-12-blueviolet">
+<img src="https://img.shields.io/badge/PHASES-7-yellow">
+<img src="https://img.shields.io/badge/SOC-LAB-informational">
+<img src="https://img.shields.io/badge/BLUE_TEAM-INTERNSHIP-purple">
 <img src="https://img.shields.io/badge/WAZUH-SIEM-red">
 <img src="https://img.shields.io/badge/MITRE-ATT%26CK-orange">
 </p>
