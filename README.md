@@ -52,10 +52,13 @@ capstone investigations.
 
 | Component | Role | IP |
 |---|---|---|
-| Kali Linux | Attacker / testing | 192.168.56.102 |
+| Kali Linux | Attacker / testing box | 192.168.56.102 |
 | Ubuntu Server (Wazuh Manager) | SIEM, FIM, log analysis | 192.168.56.10 |
-| Windows 11 | Monitored endpoint (Wazuh agent) | agent |
-| pfSense | Firewall / network segmentation | gateway |
+| Windows 11 | Monitored endpoint — Wazuh agent | 192.168.56.1 |
+| pfSense | Firewall / network segmentation (LAN) | 192.168.56.2 |
+
+Networking: VirtualBox host-only network, later re-routed through pfSense so all
+inter-VM traffic is filtered and segmented rather than flat.
 
 ---
 
