@@ -54,7 +54,7 @@ capstone investigations.
 |---|---|---|
 | Kali Linux | Attacker / testing box | 192.168.56.102 |
 | Ubuntu Server (Wazuh Manager) | SIEM, FIM, log analysis | 192.168.56.10 |
-| Windows 11 | Monitored endpoint — Wazuh agent | 192.168.56.1 |
+| Windows 11 (agent: `win10-vm`) | Monitored endpoint — Wazuh agent | 192.168.56.1 |
 | pfSense | Firewall / network segmentation (LAN) | 192.168.56.2 |
 
 Networking: VirtualBox host-only network, later re-routed through pfSense so all
