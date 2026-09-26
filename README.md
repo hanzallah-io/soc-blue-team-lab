@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/Windows%2010-0078D6?logo=windows&logoColor=white">
+<img src="https://img.shields.io/badge/Windows%2011-0078D6?logo=windows&logoColor=white">
 <img src="https://img.shields.io/badge/Kali%20Linux-557C94?logo=kalilinux&logoColor=white">
 <img src="https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white">
 <img src="https://img.shields.io/badge/pfSense-212121?logo=pfsense&logoColor=white">
