@@ -52,7 +52,12 @@ capstone investigations.
 
 ### Architecture Diagram
 
+<details>
+<summary>📸 Click to view screenshot</summary>
+
 ![Lab Architecture Diagram](./assets/architecture.png)
+
+</details>
 
 | Component | Role | IP |
 |---|---|---|
@@ -139,15 +144,30 @@ inter-VM traffic is filtered and segmented rather than flat.
 
 ### Wazuh File Integrity Detection
 
+<details>
+<summary>📸 Click to view screenshot</summary>
+
 ![Wazuh File Integrity Detection](./assets/wazuh-detection.png)
+
+</details>
 
 ### Wazuh Agent Monitoring
 
+<details>
+<summary>📸 Click to view screenshot</summary>
+
 ![Wazuh Agent Monitoring](./assets/wazuh-agents.png)
+
+</details>
 
 ### Suricata Alert
 
+<details>
+<summary>📸 Click to view screenshot</summary>
+
 ![Suricata Alert](./assets/suricata-alert.png)
+
+</details>
 
 ---
 
@@ -169,7 +189,12 @@ inter-VM traffic is filtered and segmented rather than flat.
 
 ### pfSense Firewall Configuration
 
+<details>
+<summary>📸 Click to view screenshot</summary>
+
 ![pfSense Firewall Configuration](./assets/pfsense-firewall.png)
+
+</details>
 
 ---
 
@@ -197,7 +222,12 @@ inter-VM traffic is filtered and segmented rather than flat.
 
 ### Forensic Analysis
 
+<details>
+<summary>📸 Click to view screenshot</summary>
+
 ![Forensic Analysis](./assets/forensic-analysis.png)
+
+</details>
 
 ---
 
