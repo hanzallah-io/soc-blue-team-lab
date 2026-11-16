@@ -256,6 +256,10 @@ inter-VM traffic is filtered and segmented rather than flat.
 Completed as part of the **Cyberster SOC Analyst Internship (Batch 2)**. Weekly
 progress also documented on [LinkedIn](https://www.linkedin.com/in/hanzallah-io/).
 
+## 📄 License
+
+Released under the [MIT License](LICENSE).
+
 ## 👨‍💻 Author
 
 **Muhammad Hanzallah**
