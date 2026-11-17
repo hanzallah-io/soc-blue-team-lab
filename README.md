@@ -1,196 +1,113 @@
-<h1 align="center">🛡️ SOC Blue Team Lab — Cyberster Internship</h1>
+<h1 align="center">🛡️ SOC Blue Team Lab</h1>
 
 <p align="center">
-🔴 Detect • 🟣 Investigate • 🟢 Respond • 🔵 Report
+<b>Telemetry → Detection → Investigation → Threat Intel → Incident Response → Forensics</b><br>
+Built during a 90-day SOC Analyst internship at Cyberster (Batch 2)
 </p>
 
 <p align="center">
 <img src="https://img.shields.io/badge/STATUS-COMPLETED-brightgreen">
 <img src="https://img.shields.io/badge/DURATION-90%20DAYS%20%7C%2012%20WEEKS-blue">
-<img src="https://img.shields.io/badge/BLUE_TEAM-INTERNSHIP-purple">
 <img src="https://img.shields.io/badge/WAZUH-SIEM-red">
+<img src="https://img.shields.io/badge/SURICATA-IDS-D3212D">
 <img src="https://img.shields.io/badge/MITRE-ATT%26CK-orange">
-</p>
-
-<p align="center">
-<img src="https://img.shields.io/badge/Windows%2011-0078D6?logo=windows&logoColor=white">
-<img src="https://img.shields.io/badge/Kali%20Linux-557C94?logo=kalilinux&logoColor=white">
-<img src="https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white">
-<img src="https://img.shields.io/badge/pfSense-212121?logo=pfsense&logoColor=white">
-<img src="https://img.shields.io/badge/Suricata-D3212D">
+<img src="https://img.shields.io/badge/NIST-SP%20800--61-blue">
+<img src="https://img.shields.io/badge/License-MIT-lightgrey">
 </p>
 
 ---
 
-## 📖 Project Summary
+## 📖 Summary
 
-The **SOC Blue Team Lab** simulates a real-world enterprise security operations
-environment — built during a 90-day Blue Team SOC Analyst internship at Cyberster.
-It integrates SIEM deployment, network segmentation, intrusion detection, threat
-intelligence, incident response, and digital forensics into one continuous,
-hands-on workflow.
+A multi-VM SOC lab that follows an attack through the full blue-team pipeline: endpoint telemetry, custom detections, investigation, threat-intel enrichment, incident response (NIST SP 800-61) and forensics.
 
-Unlike a single-purpose tutorial lab, this project evolved week over week: starting
-from basic log analysis, progressing through detection engineering and network
-segmentation with pfSense, and culminating in full incident response and DFIR
-capstone investigations.
+It was built week by week rather than from a single tutorial. Every failure along the way (a silent rule, a broken integration, a VM that wouldn't boot) is documented with its root cause and fix.
 
----
-
-## 🎯 Objectives
-
-- ✅ Build a multi-VM SOC lab with segmented, routed network topology
-- ✅ Deploy and tune Wazuh SIEM across Windows and Linux endpoints
-- ✅ Develop custom detection rules (Wazuh + Suricata)
-- ✅ Integrate threat intelligence feeds mapped to MITRE ATT&CK
-- ✅ Conduct incident response following NIST SP 800-61
-- ✅ Perform digital forensics investigations (Volatility 3, browser/LNK/USB analysis)
+**Stack:** Wazuh · Suricata · pfSense · VirusTotal · URLhaus · Volatility 3 · Autopsy · Wireshark · Kali · Windows 11 · Ubuntu
 
 ---
 
 ## 🖥️ Lab Architecture
 
-### Architecture Diagram
+![Lab Architecture](./assets/architecture.png)
 
-<details>
-<summary>📸 Click to view screenshot</summary>
-
-![Lab Architecture Diagram](./assets/architecture.png)
-
-</details>
-
-| Component | Role | IP |
-|---|---|---|
-| Kali Linux | Attacker / testing box | 192.168.56.102 |
-| Ubuntu Server (Wazuh Manager) | SIEM, FIM, log analysis | 192.168.56.10 |
-| Windows 11 (agent: `win10-vm`) | Monitored endpoint — Wazuh agent | 192.168.56.1 |
-| pfSense | Firewall / network segmentation (LAN) | 192.168.56.2 |
-
-Networking: VirtualBox host-only network, later re-routed through pfSense so all
-inter-VM traffic is filtered and segmented rather than flat.
-
-```text
-                         ┌─────────────────────┐
-                         │     Kali Linux      │
-                         │ Attack Simulation   │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │       pfSense       │
-                         │ Firewall / Routing  │
-                         │    Segmentation     │
-                         └──────────┬──────────┘
-                                    │
-                     ┌──────────────┴──────────────┐
-                     │                             │
-                     ▼                             ▼
-             ┌───────────────┐             ┌───────────────┐
-             │  Windows 11   │             │ Ubuntu Server │
-             │ Wazuh Agent   │────────────►│ Wazuh Manager │
-             │    Endpoint   │   Telemetry │     / SIEM    │
-             └───────────────┘             └───────┬───────┘
-                                                   │
-                         ┌─────────────────────────┼─────────────────────┐
-                         │                         │                     │
-                         ▼                         ▼                     ▼
-                  Detection Rules          Threat Intelligence       Incident
-                  Wazuh / Suricata         VirusTotal / URLhaus       Response
-                                                                           │
-                                                                           ▼
-                                                                  Digital Forensics
-```
-
-### SOC Investigation Workflow
-
-```text
-1. Generate / Observe Event
-            ↓
-2. Collect Telemetry
-            ↓
-3. Detect & Alert
-            ↓
-4. Investigate Evidence
-            ↓
-5. Enrich with Threat Intelligence
-            ↓
-6. Map to MITRE ATT&CK
-            ↓
-7. Respond / Contain
-            ↓
-8. Document Findings
-            ↓
-9. Perform Forensic Analysis
-```
-
----
-
-## 📂 Repository Structure
-
-| Folder | Contents |
+| Component | Role |
 |---|---|
-| `01-Lab-Setup` | VM builds, networking, base configuration |
-| `02-Wazuh-Deployment` | Agent enrollment, FIM, event log monitoring |
-| `03-Detection-Engineering` | Custom Wazuh & Suricata rules |
-| `04-Network-Segmentation` | pfSense setup, routing, firewall rules |
-| `05-Threat-Intelligence` | VirusTotal, URLhaus, MITRE ATT&CK mapping |
-| `06-Incident-Response` | NIST 800-61 IR reports, insider threat simulation |
-| `07-Digital-Forensics` | Browser/LNK/USB forensics, Volatility 3 capstone |
-| `docs-archive` | Full week-by-week internship reports (raw archive) |
+| Kali Linux | Attack simulation |
+| Ubuntu Server | Wazuh Manager / SIEM |
+| Windows 11 | Monitored endpoint (Wazuh agent) |
+| pfSense | Firewall, routing, segmentation |
+
+The lab began on a flat VirtualBox host-only network and was later routed through pfSense so inter-VM traffic is filtered and segmented.
 
 ---
 
-## 🔍 Detection Engineering
+## 🎯 Detection Showcase
 
-### Wazuh File Integrity Detection
+Custom detections written and validated in the lab. Rule files are in [`03-Detection-Engineering`](./03-Detection-Engineering).
 
-<details>
-<summary>📸 Click to view screenshot</summary>
+| Rule | Engine | MITRE ATT&CK | How it was triggered |
+|---|---|---|---|
+| `1000001` Nmap SYN scan | Suricata | T1046 | `nmap -sS` from Kali |
+| `1000002` HTTP directory traversal | Suricata | T1190 | Request with `../../../` in the URI |
+| `1000003` ICMP flood | Suricata | T1498 | High-rate ICMP echo from Kali |
+| `100001` New user account created | Wazuh | T1136 | `useradd` on the Linux endpoint |
+| `100002` SSH brute force (6+ failures / 2 min) | Wazuh | T1110 | Repeated failed SSH logins |
+| `100003` USB device inserted | Wazuh | T1091 | Device plugged into Windows 11 |
+| `100300` Known-malicious IP (Abuse.ch) | Wazuh + threat intel | n/a | Traffic matching a feed IOC |
+| `100210` `.b64` staging in `C:\Espionage` | Wazuh FIM | T1027 | Created an encoded file in the monitored folder |
+
+**Evidence**
 
 ![Wazuh File Integrity Detection](./assets/wazuh-detection.png)
 
-</details>
-
-### Wazuh Agent Monitoring
+![Suricata Alert](./assets/suricata-alert.png)
 
 <details>
-<summary>📸 Click to view screenshot</summary>
+<summary>📸 Wazuh agent monitoring</summary>
 
 ![Wazuh Agent Monitoring](./assets/wazuh-agents.png)
 
 </details>
 
-### Suricata Alert
-
-<details>
-<summary>📸 Click to view screenshot</summary>
-
-![Suricata Alert](./assets/suricata-alert.png)
-
-</details>
-
 ---
 
-## 🔍 Notable Findings
+## 🧪 Notable Findings
 
-- **VirusTotal API v2 → v3 patch** — Wazuh 4.14.5's bundled `virustotal.py`
-  integration script targets the deprecated VirusTotal API v2 endpoint, which
-  fails against valid v3 keys. Identified and patched it to use the v3 endpoint
-  with correct header-based authentication — documented as a genuine
-  visibility-gap finding.
-- **Silent detection rule failure** — A custom Wazuh rule failed to fire with no
-  error, caused by referencing the wrong FIM event field (`file` instead of the
-  actual `syscheck.path`). Found by inspecting the raw alert JSON directly
-  rather than trusting a clean service restart log.
-- **pfSense boot failure on VirtualBox** — The pfSense VM refused to boot into
-  64-bit long mode because Hyper-V held exclusive access to VT-x. Resolved by
-  setting VirtualBox's paravirtualization interface to Hyper-V and correcting
-  the guest OS type to 64-bit FreeBSD.
+### 1. Silent Wazuh FIM detection failure
 
-### pfSense Firewall Configuration
+**Symptom:** the custom FIM rule loaded, the manager was running and the ruleset was valid, but modifying the monitored file produced **zero alerts**.
+
+**Root cause:** the rule matched a field that doesn't exist in the event. Found by comparing the raw alert JSON with the rule conditions.
+
+```diff
+ <rule id="100210" level="10">
+   <if_sid>550</if_sid>
+-  <field name="file">C:\\Espionage\\.*\.b64$</field>
++  <field name="syscheck.path">C:\\Espionage\\.*\.b64$</field>
+   <description>Suspicious .b64 file in C:\Espionage - possible exfiltration staging</description>
+   <mitre><id>T1027</id></mitre>
+ </rule>
+```
+
+| | Before | After |
+|---|---|---|
+| Service status | Running | Running |
+| Ruleset check | Valid | Valid |
+| Alert on file change | ❌ None | ✅ Rule `100210` fires |
+
+**Lesson:** a clean restart proves nothing about matching. Validate rules against the raw event fields, not the config.
+
+### 2. VirusTotal API v2 → v3 integration
+
+Wazuh 4.14.5's bundled `virustotal.py` targets the deprecated v2 endpoint, which fails against valid v3 keys. Patched it to use the v3 endpoint with header-based authentication, and documented it as a visibility-gap finding. Enrichment now works end to end.
+
+### 3. pfSense would not boot on VirtualBox
+
+The VM refused to enter 64-bit long mode because Hyper-V held exclusive access to VT-x. Fixed by setting VirtualBox's paravirtualization interface to Hyper-V and correcting the guest OS type to 64-bit FreeBSD.
 
 <details>
-<summary>📸 Click to view screenshot</summary>
+<summary>📸 pfSense firewall rules</summary>
 
 ![pfSense Firewall Configuration](./assets/pfsense-firewall.png)
 
@@ -198,32 +115,16 @@ inter-VM traffic is filtered and segmented rather than flat.
 
 ---
 
-## 🧠 Skills Demonstrated
+## 🔎 Investigations
 
-`MITRE ATT&CK` `NIST SP 800-61` `Detection Engineering` `Network Segmentation`
-`SIEM/IDS Deployment` `Digital Forensics` `Volatility 3` `Threat Intelligence`
-
-### 🧩 Skills Breakdown
-
-- **Network Analysis** — Wireshark (ARP, DNS, HTTP, QUIC, ICMPv6), Suricata IDS
-  in af-packet mode with custom rules, validated via offline PCAP replay
-- **SIEM / Detection Engineering** — Wazuh agent deployment, File Integrity
-  Monitoring, custom MITRE-mapped detection rules, Active Response automation
-  (firewall-drop on SSH brute-force)
-- **Threat Intelligence** — VirusTotal API v3 enrichment, Abuse.ch/URLhaus feeds
-- **Malware Analysis** — Dynamic analysis via ANY.RUN sandbox, IOC/IOA extraction
-- **Incident Response** — NIST SP 800-61 IR plans, insider threat simulation
-  (staging, encoding, exfiltration, deletion), CyberChef decoding
-- **Digital Forensics** — Browser forensics (Chrome/Edge/Firefox/Brave), LNK
-  file analysis (LECmd), USB device forensics, memory forensics (Volatility 3),
-  disk image analysis (Autopsy, .E01)
-- **Network Security** — pfSense firewall configuration, GeoIP blocking
-  (ipset/iptables), network segmentation
-
-### Forensic Analysis
+| Area | Work | Folder |
+|---|---|---|
+| Incident Response | NIST SP 800-61 IR reports, insider-threat simulation (staging, encoding, exfiltration, deletion), CyberChef decoding | [`06-Incident-Response`](./06-Incident-Response) |
+| Digital Forensics | Browser, LNK and USB artifacts; Volatility 3 memory capstone; Autopsy disk analysis (`.E01`) | [`07-Digital-Forensics`](./07-Digital-Forensics) |
+| Threat Intelligence | VirusTotal v3 and URLhaus enrichment, IOC/IOA extraction, ATT&CK mapping | [`05-Threat-Intelligence`](./05-Threat-Intelligence) |
 
 <details>
-<summary>📸 Click to view screenshot</summary>
+<summary>📸 Forensic analysis</summary>
 
 ![Forensic Analysis](./assets/forensic-analysis.png)
 
@@ -231,30 +132,34 @@ inter-VM traffic is filtered and segmented rather than flat.
 
 ---
 
-## 📊 Investigation Coverage
+## 📂 Repository Structure
 
-| Area | Technologies / Techniques |
+| Folder | Contents |
 |---|---|
-| SIEM | Wazuh |
-| IDS | Suricata |
-| Firewall | pfSense |
-| Network Analysis | Wireshark |
-| Threat Intelligence | VirusTotal, URLhaus |
-| Detection | Wazuh Rules, Suricata Rules |
-| Frameworks | MITRE ATT&CK, NIST SP 800-61 |
-| Incident Response | Investigation, containment, reporting |
-| Memory Forensics | Volatility 3 |
-| Disk Forensics | Autopsy, `.E01` |
-| Artifact Analysis | Browser, LNK, USB |
-| Malware Analysis | ANY.RUN |
-| Automation | Wazuh Active Response |
+| [`01-Lab-Setup`](./01-Lab-Setup) | VM builds, networking, base configuration |
+| [`02-Wazuh-Deployment`](./02-Wazuh-Deployment) | Agent enrollment, FIM, event log monitoring |
+| [`03-Detection-Engineering`](./03-Detection-Engineering) | Custom Wazuh and Suricata rules |
+| [`04-Network-Segmentation`](./04-Network-Segmentation) | pfSense setup, routing, firewall rules |
+| [`05-Threat-Intelligence`](./05-Threat-Intelligence) | VirusTotal, URLhaus, MITRE mapping |
+| [`06-Incident-Response`](./06-Incident-Response) | IR reports, insider-threat simulation |
+| [`07-Digital-Forensics`](./07-Digital-Forensics) | Browser/LNK/USB forensics, Volatility 3 capstone |
+| [`docs-archive`](./docs-archive) | Raw week-by-week internship reports |
+
+---
+
+## 🧠 Skills Demonstrated
+
+- **SIEM & detection engineering:** Wazuh deployment, FIM, custom MITRE-mapped rules, Active Response (`firewall-drop` on SSH brute force)
+- **Network security:** Suricata (af-packet, custom rules, offline PCAP replay), pfSense segmentation, GeoIP blocking (ipset/iptables), Wireshark (ARP, DNS, HTTP, QUIC, ICMPv6)
+- **Threat intelligence & malware analysis:** VirusTotal v3, Abuse.ch/URLhaus, ANY.RUN sandbox, IOC extraction
+- **Incident response:** NIST SP 800-61 playbooks, evidence collection, containment, reporting
+- **Digital forensics:** Volatility 3, Autopsy, LECmd, browser/LNK/USB artifacts
 
 ---
 
 ## 🔗 Background
 
-Completed as part of the **Cyberster SOC Analyst Internship (Batch 2)**. Weekly
-progress also documented on [LinkedIn](https://www.linkedin.com/in/hanzallah-io/).
+Completed as part of the **Cyberster SOC Analyst Internship (Batch 2)**. Weekly progress was also documented on [LinkedIn](https://www.linkedin.com/in/hanzallah-io/).
 
 ## 📄 License
 
@@ -262,8 +167,6 @@ Released under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
-**Muhammad Hanzallah**
-BS Data Science | Cybersecurity & Blue Team Operations
+**Muhammad Hanzallah**, BS Data Science | Blue Team / SOC Analyst
 
-GitHub: **[hanzallah-io](https://github.com/hanzallah-io)**
-LinkedIn: **[hanzallah-io](https://www.linkedin.com/in/hanzallah-io/)**
+[GitHub](https://github.com/hanzallah-io) · [LinkedIn](https://www.linkedin.com/in/hanzallah-io/)
